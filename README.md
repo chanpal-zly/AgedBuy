@@ -1,2 +1,3 @@
 # MyGit
-My code repository
+My code repository. for some project
+wechat , kotlin , harmonyOS
