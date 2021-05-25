@@ -1,2 +1,3 @@
+include ':lib_resource'
 include ':app'
 rootProject.name = "AgedBuy"
