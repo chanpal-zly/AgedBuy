@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgedBuy">
         <activity
-            android:name=".ui.AgedBaseActivity"
+            android:name="com.lind.lib_base.uibase.base.AgedBaseActivity"
             android:label="@string/title_activity_aged_base"
             android:theme="@style/Theme.AgedBuy.NoActionBar"></activity>
         <activity
