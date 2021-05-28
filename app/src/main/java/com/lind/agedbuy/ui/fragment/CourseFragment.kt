@@ -1,7 +1,6 @@
 package com.lind.agedbuy.ui.fragment
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.css.base.uibase.viewmodel.DefaultViewModel
 import com.lind.agedbuy.R
+import com.lind.agedbuy.databinding.FragmentCourseBinding
 import com.lind.agedbuy.viewmodel.CourseViewModel
 import com.lind.lib_base.uibase.BaseFragment
+import com.lind.lib_base.uibase.viewmodel.DefaultViewModel
 import com.lind.lib_service.utils.SystemBarHelper
 
 
@@ -45,8 +45,8 @@ class CourseFragment : BaseFragment<DefaultViewModel, FragmentCourseBinding>() {
     inner class RecycleAdapter : RecyclerView.Adapter<RecycleAdapter.VideoHolder>() {
 
         inner class VideoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//            val videoTitle: TextView = itemView.findViewById(R.id.video_index)
-//            val videoPoster: ImageView = itemView.findViewById(R.id.video_poster)
+            val videoTitle: TextView = itemView.findViewById(R.id.video_index)
+            val videoPoster: ImageView = itemView.findViewById(R.id.video_poster)
 
             init {
                 itemView.setOnClickListener {
@@ -76,7 +76,6 @@ class CourseFragment : BaseFragment<DefaultViewModel, FragmentCourseBinding>() {
                 videoPoster.setImageResource(CourseViewModel.picture[position])
                 videoTitle.text = CourseViewModel.name[position]
             }
-
         }
     }
 }

@@ -2,7 +2,7 @@ package com.css.wondercorefit.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.css.base.uibase.viewmodel.BaseViewModel
+import com.lind.lib_base.uibase.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect

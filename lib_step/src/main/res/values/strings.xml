@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AgedBuy</string>
+    <string name="title_notification_bar">今日步数：%1$s</string>
+</resources>

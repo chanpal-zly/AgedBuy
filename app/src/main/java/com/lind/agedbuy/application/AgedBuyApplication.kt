@@ -6,6 +6,6 @@ import com.tencent.bugly.Bugly
 class AgedBuyApplication:Application() {
     override fun onCreate() {
         super.onCreate()
-        Bugly.init(applicationContext, "27afe533e5", false)
+//        Bugly.init(applicationContext, "27afe533e5", false)
     }
 }

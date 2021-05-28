@@ -7,14 +7,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.css.base.uibase.BaseFragment
-import com.css.base.uibase.viewmodel.DefaultViewModel
-import com.css.service.utils.SystemBarHelper
-import com.css.wondercorefit.R
-import com.css.wondercorefit.adapter.MallProductAdapter
-import com.css.wondercorefit.bean.ProductBean
-import com.css.wondercorefit.databinding.FragmentMallBinding
+import com.lind.agedbuy.R
+import com.lind.agedbuy.adapter.MallProductAdapter
+import com.lind.agedbuy.bean.ProductBean
+import com.lind.agedbuy.databinding.FragmentMallBinding
 import com.lind.lib_base.uibase.BaseFragment
+import com.lind.lib_base.uibase.viewmodel.DefaultViewModel
+import com.lind.lib_service.utils.SystemBarHelper
 
 class MallFragment : BaseFragment<DefaultViewModel, FragmentMallBinding>() {
     var mData = ArrayList<ProductBean>()

@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.css.base.uibase.viewmodel.DefaultViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lind.agedbuy.BuildConfig
 import com.lind.agedbuy.R
 import com.lind.agedbuy.databinding.ActivityMainBinding
+import com.lind.agedbuy.ui.fragment.CourseFragment
+import com.lind.agedbuy.ui.fragment.MainFragment
+import com.lind.agedbuy.ui.fragment.MallFragment
+import com.lind.agedbuy.ui.fragment.SettingFragment
 import com.lind.lib_base.uibase.base.AgedBaseActivity
+import com.lind.lib_base.uibase.viewmodel.DefaultViewModel
+import com.lind.lib_service.inner.BaseInner
 import com.tencent.bugly.Bugly
 
 class MainActivity : AgedBaseActivity<DefaultViewModel, ActivityMainBinding>() {
@@ -26,9 +30,9 @@ class MainActivity : AgedBaseActivity<DefaultViewModel, ActivityMainBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         if (BuildConfig.DEBUG) {
-            Bugly.init(applicationContext, "718b817297", true)
+//            Bugly.init(applicationContext, "718b817297", true)
         } else {
-            Bugly.init(applicationContext, "718b817297", false)
+//            Bugly.init(applicationContext, "718b817297", false)
         }
         initTablayout()
     }
@@ -69,6 +73,38 @@ class MainActivity : AgedBaseActivity<DefaultViewModel, ActivityMainBinding>() {
 //            }
                 changeFragment(it)
             })
+    }
+    private fun changeFragment(tabIndex: Int) {
+        val fragment = getFragment(tabIndex) ?: return
+        if (mCurFragment == fragment) {
+            return
+        }
+        val newFragmentTag = fragment::class.java.simpleName
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
+        if (mCurFragment != null && !mCurFragment!!.isHidden) {
+            ft.hide(mCurFragment!!)
+        }
+        val fragmentByTag = fragmentManager.findFragmentByTag(newFragmentTag)
+        if (fragmentByTag == null) {
+            if (!fragment.isAdded) {
+                ft.add(R.id.container_main, fragment, newFragmentTag)
+            }
+        } else {
+            ft.show(fragmentByTag)
+        }
+        ft.commitAllowingStateLoss()
+        mCurFragment = fragment
+    }
+
+    private fun getFragment(@BaseInner.TabIndex tabIndex: Int): Fragment? {
+        when (tabIndex) {
+            BaseInner.TabIndex.HOME -> return mTabMainFragment
+            BaseInner.TabIndex.COURSE -> return mTabCourseFragment
+            BaseInner.TabIndex.MALL -> return mTabMallFragment
+            BaseInner.TabIndex.SETTING -> return mTabSettingFragment
+        }
+        return null
     }
 
     override fun initViewBinding(

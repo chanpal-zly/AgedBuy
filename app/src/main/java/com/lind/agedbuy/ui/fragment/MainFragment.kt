@@ -2,18 +2,24 @@ package com.lind.agedbuy.ui.fragment
 
 import android.content.*
 import android.os.*
-import android.service.autofill.UserData
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.alibaba.android.arouter.launcher.ARouter
-import com.blankj.utilcode.util.LogUtils
-import com.css.wondercorefit.viewmodel.MainViewModel
+import com.css.step.ISportStepInterface
+import com.css.step.TodayStepManager
+import com.css.step.service.SensorService
+import com.css.step.service.TodayStepService
+import com.lind.agedbuy.databinding.FragmentMainBinding
+import com.lind.agedbuy.ui.activity.setting.PersonInformationActivity
+import com.lind.agedbuy.viewmodel.MainViewModel
 import com.lind.lib_base.uibase.BaseFragment
+import com.lind.lib_service.data.StepData
+import com.lind.lib_service.data.UserData
 import com.lind.lib_service.utils.SystemBarHelper
+import com.lind.lib_service.utils.AgedBuyCache
 
 
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), View.OnClickListener {
@@ -36,152 +42,37 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), View.On
         super.initView(savedInstanceState)
         SystemBarHelper.immersiveStatusBar(activity, 0f)
         SystemBarHelper.setHeightAndPadding(activity, mViewBinding?.topView)
-        showDevice()
         startSensorService()
         startStep()
-        initClickListenr()
+//        initClickListenr()
         initProgressRate()
         if (mUserData.isFirst) {
             activity?.let { PersonInformationActivity.starActivity(it) }
             mUserData.isFirst = false
-            WonderCoreCache.saveUserInfo(mUserData)
+            AgedBuyCache.saveUserInfo(mUserData)
         }
     }
 
     override fun initData() {
         super.initData()
-        mViewBinding?.tvTargetWeightNum?.text = WonderCoreCache.getUserInfo().targetWeight
-
-        WeightBondData.firstWeightInfoObsvr.let {
-            it.observe(this) { it2 ->
-                if (it2 != null) {
-                    mViewBinding?.tvInitialWeightNum?.text = it2.weightKgFmt
-                } else {
-                    mViewBinding?.tvInitialWeightNum?.text = "--"
-                }
-            }
-        }
-
-        WeightBondData.lastWeightInfoObsvr.let {
-            it.observe(this) { it2 ->
-                if (it2 != null) {
-                    mViewBinding?.tvCurrentWeight?.text = it2.weightKgFmt("%.1f")
-                    if (it2?.getBodyFatData()?.bmi != null) {
-                        mViewBinding?.llBmi?.visibility = View.VISIBLE
-                        mViewBinding?.tvBmi?.text = "BMI${it2?.getBodyFatData()?.bmi}"
-                        mViewBinding?.tvBodyType?.text = it2.fatLevel
-                    } else {
-                        mViewBinding?.llBmi?.visibility = View.GONE
-                    }
-                }
-            }
-        }
-
-        WeightBondData.lastWeightInfo.let {
-            if (it?.getBodyFatData()?.bmi != null) {
-                mViewBinding?.llBmi?.visibility = View.VISIBLE
-                mViewBinding?.tvBmi?.text = "BMI${it?.getBodyFatData()?.bmi}"
-                mViewBinding?.tvBodyType?.text = it.fatLevel
-            }
-        }
-    }
-
-    private fun showDevice() {
-        //是否已绑定体脂秤
-        if (WonderCoreCache.getData(
-                WonderCoreCache.BOND_WEIGHT_INFO,
-                BondDeviceData::class.java
-            ).mac.isNotEmpty()
-        ) {
-            mViewBinding?.llDevice?.visibility = View.VISIBLE
-            mViewBinding?.deviceWeight?.visibility = View.VISIBLE
-            mViewBinding?.llCurrentWeight?.visibility = View.VISIBLE
-            mViewBinding?.gotoMeasure?.visibility = View.GONE
-            mViewBinding?.tvNoneWeight?.visibility = View.GONE
-        } else {
-            mViewBinding?.gotoMeasure?.visibility = View.VISIBLE
-            mViewBinding?.tvNoneWeight?.visibility = View.VISIBLE
-            mViewBinding?.llCurrentWeight?.visibility = View.GONE
-        }
-        //是否已绑定健腹轮
-        if (WonderCoreCache.getData(
-                WonderCoreCache.BOND_WHEEL_INFO,
-                BondDeviceData::class.java
-            ).mac.isNotEmpty()
-        ) {
-            mViewBinding?.llDevice?.visibility = View.VISIBLE
-            mViewBinding?.deviceWheel?.visibility = View.VISIBLE
-        }
-        //绑定监听
-        sp?.registerOnSharedPreferenceChangeListener(spLis)
-    }
-
-    private val sp by lazy { activity?.getSharedPreferences("spUtils", Context.MODE_PRIVATE) }
-    private val spLis by lazy {
-        SharedPreferences.OnSharedPreferenceChangeListener { sp, key ->
-            when (key) {
-                WonderCoreCache.BOND_WEIGHT_INFO -> {
-                    if (WonderCoreCache.getData(
-                            WonderCoreCache.BOND_WEIGHT_INFO,
-                            BondDeviceData::class.java
-                        ).mac.isNotEmpty()
-                    ) {
-                        mViewBinding?.llDevice?.visibility = View.VISIBLE
-                        mViewBinding?.deviceWeight?.visibility = View.VISIBLE
-                        mViewBinding?.gotoMeasure?.visibility = View.GONE
-                        mViewBinding?.tvNoneWeight?.visibility = View.GONE
-                        mViewBinding?.llCurrentWeight?.visibility = View.VISIBLE
-                    } else {
-                        mViewBinding?.llDevice?.visibility = View.GONE
-                        mViewBinding?.gotoMeasure?.visibility = View.VISIBLE
-                        mViewBinding?.tvNoneWeight?.visibility = View.VISIBLE
-                        mViewBinding?.llCurrentWeight?.visibility = View.GONE
-                    }
-
-                    if (WonderCoreCache.getData(
-                            WonderCoreCache.BOND_WHEEL_INFO,
-                            BondDeviceData::class.java
-                        ).mac.isNotEmpty()
-                    ) {
-                        mViewBinding?.llDevice?.visibility = View.VISIBLE
-                        mViewBinding?.deviceWheel?.visibility = View.VISIBLE
-                    } else {
-                        mViewBinding?.deviceWheel?.visibility = View.INVISIBLE
-                    }
-                }
-                WonderCoreCache.USER_INFO -> {
-                    mUserData = WonderCoreCache.getUserInfo()
-                    mViewBinding?.tvTargetWeightNum?.text =
-                        mUserData.targetWeight
-                    mViewBinding?.tvTodayStepTarget?.text =
-                        "目标 ${mUserData.targetStep}"
-                }
-
-            }
-            LogUtils.vTag("suisui", key)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        sp?.unregisterOnSharedPreferenceChangeListener(spLis)
+        mViewBinding?.tvTargetWeightNum?.text = AgedBuyCache.getUserInfo().targetWeight
     }
 
     private fun initProgressRate() {
-        mUserData = WonderCoreCache.getUserInfo()
+        mUserData = AgedBuyCache.getUserInfo()
         targetStep = mUserData.targetStep
-        stepData = WonderCoreCache.getData(WonderCoreCache.STEP_DATA, StepData::class.java)
+        stepData = AgedBuyCache.getData(AgedBuyCache.STEP_DATA, StepData::class.java)
         currentStep = stepData.todaySteps
         result = ((currentStep * 100) / targetStep.toInt()).toFloat()
         Log.d(TAG, "ProgressInformation   :  $currentStep    $targetStep    $result")
         mViewBinding?.pbStep?.setProgress(result)
     }
 
-    private fun initClickListenr() {
-        mViewBinding!!.gotoMeasure.setOnClickListener(this)
-        mViewBinding!!.deviceWeight.setOnClickListener(this)
-        mViewBinding!!.addBleDevice.setOnClickListener(this)
-    }
+//    private fun initClickListenr() {
+//        mViewBinding!!.gotoMeasure.setOnClickListener(this)
+//        mViewBinding!!.deviceWeight.setOnClickListener(this)
+//        mViewBinding!!.addBleDevice.setOnClickListener(this)
+//    }
 
     private fun startSensorService() {
         val intentSensor = Intent(activity, SensorService::class.java)
@@ -285,20 +176,20 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), View.On
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.device_weight -> {
-                ARouter.getInstance()
-                    .build(ARouterConst.PATH_APP_BLE_WEIGHTMEASURE)
-                    .navigation()
-            }
-            R.id.goto_measure -> {
-                activity?.let { ToastDialog(it).showPopupWindow() }
-            }
-
-            R.id.add_ble_device -> {
-                ARouter.getInstance()
-                    .build(ARouterConst.PATH_APP_BLE)
-                    .navigation()
-            }
+//            R.id.device_weight -> {
+//                ARouter.getInstance()
+//                    .build(ARouterConst.PATH_APP_BLE_WEIGHTMEASURE)
+//                    .navigation()
+//            }
+//            R.id.goto_measure -> {
+//                activity?.let { ToastDialog(it).showPopupWindow() }
+//            }
+//
+//            R.id.add_ble_device -> {
+//                ARouter.getInstance()
+//                    .build(ARouterConst.PATH_APP_BLE)
+//                    .navigation()
+//            }
         }
     }
 

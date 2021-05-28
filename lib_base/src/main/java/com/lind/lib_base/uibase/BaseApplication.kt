@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
-import com.alibaba.android.arouter.launcher.ARouter
+//import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.Utils
 import com.lind.lib_base.BuildConfig
 
@@ -13,7 +13,7 @@ open class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        configArouter()
+//        configArouter()
         initBlankj()
     }
 
@@ -45,11 +45,11 @@ open class BaseApplication : Application() {
 
     }
 
-    private fun configArouter() {
-        if (BuildConfig.DEBUG) {
-            ARouter.openLog()
-            ARouter.openDebug()
-        }
-        ARouter.init(this)
-    }
+//    private fun configArouter() {
+//        if (BuildConfig.DEBUG) {
+//            ARouter.openLog()
+//            ARouter.openDebug()
+//        }
+//        ARouter.init(this)
+//    }
 }

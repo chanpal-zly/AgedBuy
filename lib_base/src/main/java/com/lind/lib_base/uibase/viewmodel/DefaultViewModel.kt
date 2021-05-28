@@ -1,6 +1,4 @@
-package com.css.base.uibase.viewmodel
-
-import com.lind.lib_base.uibase.viewmodel.BaseViewModel
+package com.lind.lib_base.uibase.viewmodel
 
 /**
  * 空实现的 view model
