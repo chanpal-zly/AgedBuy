@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.lind.agedbuy.bean.ProductBean" />
+            type="com.lind.startProject.bean.ProductBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

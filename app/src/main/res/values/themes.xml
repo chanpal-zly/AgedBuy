@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AgedBuy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.startProject" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,12 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.AgedBuy.NoActionBar">
+    <style name="Theme.startProject.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.AgedBuy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.startProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.AgedBuy.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.startProject.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/activity_about_us.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/activity_aged_base.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/activity_person_information.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/activity_terms.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/dialog_person_info_setting.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_course.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_main.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_mall.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_setting.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_terms_liability.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_terms_privacy.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/fragment_terms_service.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/item_product_layout.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/item_view_video.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/main_tab_item.xml" value="0.2046875" />
+        <entry key="..\:/android/android_space/startProject/startProject/app/src/main/res/layout/main_tab_view.xml" value="0.2046875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

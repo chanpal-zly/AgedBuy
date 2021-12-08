@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.lind.agedbuy.widget.XTabLayout
+    <com.lind.startProject.widget.XTabLayout
         android:id="@+id/tablayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
